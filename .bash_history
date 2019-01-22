@@ -1,42 +1,3 @@
-ls
-cd proj-rt-files/
-ls
-vim render_world.cpp
-ls
-vim render_world.cpp
-ls -a
-vim render_world.cpp
-rm render_world.cpp.swp
-ls -a
-rm .render_world.cpp.swp
-ls -a
-rm .render_world.cpp.swp 
-ls -a
-vim render_world.
-vim render_world.cpp
-scons
-vim render_world.cpp
-ls
-vim object.h
-ls -a
-rm .object.h.swp
-ls
-vim render_world.cpp
-scons
-vim render_world.cpp
-q
-:x
-ls
-cd proj-rt
-ls
-cd proj-rt-files/
-ls
-vim vec.h
-l
-ls
-cd proj-rt/
-ls
-cd proj-ft-files
 cd proj-rt-files/
 ls
 ls
@@ -98,3 +59,42 @@ scons
 vim render_world.cpp
 scons
 vim render_world.cpp
+ls
+cd proj-rt
+ls
+cd proj-rt-files
+ls
+vim render_world.cpp
+exit
+ls
+cd proj-rt
+ls
+cd proj-rt-files
+ls
+scons
+vim render_world.cpp
+ls
+cd ..
+i
+ls
+cd
+exit
+ls
+cd proj-rt/
+ls
+proj-rt-files/
+ls
+cd proj-rt-files/
+ls
+ls -a
+ls
+vim render_world.cpp
+ls
+cd ..
+ls
+cd ..
+ls
+cd ls
+ls -a
+cd cs
+exit

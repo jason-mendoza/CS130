@@ -22,12 +22,16 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
-    TODO;
-    int min_t = std::numeric_limits<int>::max();
-    for(int i = 0; i < objects.size(); i++ ){
-     hit 
+    double min_t = std::numeric_limits<double>::max();
+    Hit closest;
+    closest.dist = std::numeric_limits<double>::min();
+    for(unsigned int i = 0; i < objects.size(); i++ ){
+      Hit current = objects[i]->Intersection(ray, objects[i]->number_parts);
+      if (current.dist > closest.dist && current.object != NULL && current.dist >= min_t  ){
+       closest = current;
+      } 
     }
-    return {};
+    return closest;
 }
 
 // set up the initial view ray and call
@@ -56,6 +60,10 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
     vec3 color;
     TODO; // determine the color here
+    Hit closest = Closest_Intersection(ray); 
+    if (closest.object != NULL){
+     color = Shade_Surface(ray, );  
+    }
     return color;
 }
 
