@@ -9,6 +9,8 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     const vec3& normal,int recursion_depth) const
 {
     vec3 color;
-    TODO; //determine the color
-    return color;
+   // TODO; //determine the color
+   vec3 tmp = color_ambient * world.ambient_intensity * world.ambient_color;
+   color = tmp; 
+   return color;
 }
