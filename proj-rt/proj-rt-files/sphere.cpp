@@ -15,7 +15,7 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
     else if (discriminant > 0){
      t0 = 0.5 * (-b + sqrt(discriminant)) / a;
      t1 = 0.5 * (-b - sqrt(discriminant)) / a;
-      if (t0 >= t1){
+      if (t0 < t1){
        t = t0;
       }
       else{

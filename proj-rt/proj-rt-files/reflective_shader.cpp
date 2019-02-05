@@ -8,5 +8,6 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 {
     vec3 color;
     TODO; // determine the color
+    
     return color;
 }
