@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include <limits>
+#include "plane.h"
+#include "ray.h"
 
 // Consider a triangle to intersect a ray if the ray intersects the plane of the
 // triangle with barycentric weights in [-weight_tolerance, 1+weight_tolerance]
@@ -42,16 +44,33 @@ void Mesh::Read_Obj(const char* file)
 // Check for an intersection against the ray.  See the base class for details.
 Hit Mesh::Intersection(const Ray& ray, int part) const
 {
-    TODO;
-    return {};
+    double distance;
+    if (part >= 0){
+    	if(Intersect_Triangle(ray, part, distance)){
+		return{this, distance, part};
+	}
+    }
+    else{
+	for(unsigned i = 0; i < triangles.size(); i++){
+		if(Intersect_Triangle(ray, i, distance)){
+			return{this, distance, i};
+		}
+	}
+    }
+    return {0,0,0};
 }
 
 // Compute the normal direction for the triangle with index part.
 vec3 Mesh::Normal(const vec3& point, int part) const
 {
     assert(part>=0);
-    TODO;
-    return vec3();
+    vec3 trivertex1, trivertex2, trivertex3, trinormal;
+
+    trivertex1 = vertices.at(triangles[part][0]);
+    trivertex2 = vertices.at(triangles[part][1]);
+    trivertex3 = vertices.at(triangles[part][2]);
+    trinormal = cross(trivertex1 - trivertex2, trivertex2 - trivertex3).normalized();    
+    return trinormal;
 }
 
 // This is a helper routine whose purpose is to simplify the implementation
@@ -68,7 +87,32 @@ vec3 Mesh::Normal(const vec3& point, int part) const
 // two triangles.
 bool Mesh::Intersect_Triangle(const Ray& ray, int tri, double& dist) const
 {
-    TODO;
+    
+    vec3 trivertex1, trivertex2, trivertex3, point, v, w, y, u;
+    trivertex1 = vertices.at(triangles[tri][0]);
+    trivertex2 = vertices.at(triangles[tri][1]);
+    trivertex3 = vertices.at(triangles[tri][2]);
+
+    Plane p(trivertex1, Normal(trivertex1, tri));
+    Hit intersection = p.Intersection(ray, tri);
+    if(!intersection.object || intersection.dist <= small_t){
+    	return false;
+    }
+    
+    point = ray.Point(intersection.dist);
+    v = trivertex2 - trivertex1;
+    w = trivertex3 - trivertex1;
+    y = point - trivertex1;
+    u = ray.direction;
+
+    double gamma = dot(cross(u,v),y) / dot(cross(u,v),w); 
+    double beta = dot(cross(w,u), y) / dot(cross(w,u),v);
+    double alpha = 1 - beta - gamma;
+    
+    if(alpha >= -weight_tolerance && beta >= -weight_tolerance && gamma >= -weight_tolerance){
+    	dist = intersection.dist;
+    	return true;
+    }
     return false;
 }
 
